@@ -172,4 +172,973 @@
       font-size: 0.78rem;
       color: #4b5563;
       user-select: none;
-      transi
+      transition: all 0.12s ease-out;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .toggle-option input:checked + .toggle-label {
+      background: #111827;
+      color: #f9fafb;
+      box-shadow: 0 10px 20px rgba(15,23,42,0.25);
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .nav-buttons-left,
+    .nav-buttons-right {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    button {
+      border-radius: 999px;
+      border: none;
+      font-size: 0.9rem;
+      padding: 8px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.12s ease, transform 0.08s ease, box-shadow 0.12s ease;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: #111827;
+      color: #f9fafb;
+      box-shadow: 0 12px 24px rgba(15,23,42,0.3);
+    }
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+    }
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(15,23,42,0.15);
+    }
+    button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .small-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Results view */
+    #resultsView {
+      display: none;
+    }
+    .summary-card {
+      margin-top: 10px;
+      margin-bottom: 14px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      background: #f9fafb;
+    }
+    .summary-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .summary-title {
+      font-weight: 600;
+    }
+    .summary-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #111827;
+      color: #f9fafb;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+    .summary-body {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .category-card {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      padding: 10px 11px;
+      background: #ffffff;
+    }
+    .category-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 5px;
+    }
+    .category-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .category-level {
+      font-size: 0.75rem;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: #4b5563;
+      white-space: nowrap;
+    }
+    .category-bar-outer {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+    .category-bar-inner {
+      height: 100%;
+      width: 0;
+      border-radius: 999px;
+      background: #111827;
+      transition: width 0.25s ease-out;
+    }
+    .category-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-top: 2px;
+    }
+    .category-strategy {
+      font-size: 0.78rem;
+      color: #4b5563;
+      margin-top: 3px;
+      line-height: 1.45;
+      font-style: italic;
+    }
+
+    .notes-card {
+      margin-top: 12px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      background: #ffffff;
+    }
+    .notes-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .notes-card p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .notes-textarea {
+      width: 100%;
+      min-height: 110px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      padding: 8px 9px;
+      font-size: 0.9rem;
+      resize: vertical;
+      outline: none;
+    }
+    .notes-textarea:focus {
+      border-color: #111827;
+      box-shadow: 0 0 0 1px #11182722;
+    }
+
+    .results-actions {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 640px) {
+      .app {
+        padding: 18px 14px 22px;
+        border-radius: 18px;
+      }
+      .questions-list {
+        max-height: 60vh;
+      }
+      .question-header {
+        flex-direction: column;
+      }
+      .question-index {
+        text-align: left;
+      }
+      .nav-buttons {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+      .nav-buttons-left,
+      .nav-buttons-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .nav-buttons-right {
+        justify-content: flex-end;
+      }
+      button {
+        flex: 1 1 auto;
+        justify-content: center;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .app {
+        box-shadow: none;
+        border-radius: 0;
+      }
+      #questionsView {
+        display: none !important;
+      }
+      #resultsView {
+        display: block !important;
+      }
+      button {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="pill">Self-reflection · Trauma Profile</div>
+      <h1>Post Traumatic Stress Index</h1>
+      <p class="subtitle">
+        Based on the Post Traumatic Stress Index by Patrick J. Carnes, Ph.D., and David L. Delmonico, M.Ed.
+        Check whether each statement has ever been true for you.
+      </p>
+      <div class="disclaimer">
+        <strong>Important:</strong> This tool is for personal reflection only. It does not diagnose PTSD or any
+        mental health condition. Category levels are approximate and based on themes in your answers, not on an
+        official scoring key. If you are thinking of harming yourself or others, please contact local emergency
+        services or a crisis line (for example, 988 in the U.S.) right away, and seek professional support.
+      </div>
+    </header>
+
+    <!-- Progress -->
+    <div class="progress" id="progressBar">
+      <div class="progress-top">
+        <div id="progressLabel">Page 1 of 6</div>
+        <div id="progressDetail">Questions 1–24 of 144</div>
+      </div>
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" id="progressInner"></div>
+      </div>
+    </div>
+
+    <!-- Questions View -->
+    <div id="questionsView" class="view">
+      <div class="questions-card">
+        <div class="questions-list" id="questionsContainer"></div>
+
+        <div class="nav-buttons">
+          <div class="nav-buttons-left">
+            <button class="btn-secondary" id="btnPrev" disabled>&larr; Back</button>
+            <button class="btn-ghost" id="btnClear">Clear This Page</button>
+            <button class="btn-ghost" id="btnStartOver">Start Over</button>
+          </div>
+          <div class="nav-buttons-right">
+            <button class="btn-secondary" id="btnSave">Save Progress</button>
+            <button class="btn-primary" id="btnNext">Next &rarr;</button>
+          </div>
+        </div>
+        <p class="small-hint">
+          Answer with “Yes” if the statement has ever been true at any point in your life. You can move between pages
+          without losing answers during this session.
+        </p>
+      </div>
+    </div>
+
+    <!-- Results View -->
+    <div id="resultsView" class="view">
+      <div class="summary-card">
+        <div class="summary-header">
+          <div>
+            <div class="summary-title">Your trauma profile snapshot</div>
+            <div id="summarySub" class="summary-body" style="margin-top:4px;"></div>
+          </div>
+          <div class="summary-pill" id="summaryScore">Score: 0 / 144</div>
+        </div>
+        <div class="summary-body" id="summaryNote"></div>
+      </div>
+
+      <h2 style="font-size:1rem; margin-bottom:4px;">Trauma pattern clusters (approximate)</h2>
+      <p class="small-hint">
+        These clusters are estimated by matching your “Yes” answers to common trauma themes from Carnes’ model
+        (reactions, repetition, bonds, shame, pleasure, blocking, splitting, abstinence).
+        Use this as a conversation starter with a therapist, not as a diagnosis.
+      </p>
+
+      <div class="category-grid" id="categoryGrid"></div>
+
+      <div class="notes-card">
+        <h3>Notes &amp; reflections</h3>
+        <p>
+          Use this space to jot down anything that stands out, memories that surfaced, questions for a therapist,
+          or next steps you’d like to take. This box will appear if you print or save this page as a PDF.
+        </p>
+        <textarea class="notes-textarea" id="notesBox" placeholder="For example: patterns I notice, things that feel especially intense, people I might want support from, or questions I’d like to ask in counseling..."></textarea>
+      </div>
+
+      <div class="results-actions">
+        <button class="btn-secondary" id="btnRetake">Edit My Answers</button>
+        <button class="btn-ghost" id="btnStartOver2">Start Over</button>
+        <button class="btn-secondary" onclick="sendResultsByEmail()">Send results to my email</button>
+        <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+        <span>Note: The email button opens your email app with a pre-filled summary. Your answers are not sent to any server.</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // -----------------------------
+    // Question data (144 items)
+    // -----------------------------
+    const questions = [
+      { id: 1, text: "I have recurring memories of painful experiences" },
+      { id: 2, text: "I am unable to stop a childhood pattern harmful to myself" },
+      { id: 3, text: "I sometimes obsess about people who have hurt me and are now gone" },
+      { id: 4, text: "I feel bad at times about myself because of shameful experiences I believe were my fault" },
+      { id: 5, text: "I am a risk taker" },
+      { id: 6, text: "At times, I have difficulty staying awake" },
+      { id: 7, text: "I sometimes feel separate from my body as a reaction to a flashback or memory" },
+      { id: 8, text: "I deny myself basic needs at times like groceries, shoes, books, medical care, rent and heat" },
+      { id: 9, text: "I have distressing dreams about experiences" },
+      { id: 10, text: "I repeat painful experiences over and over" },
+      { id: 11, text: "I try to be understood by those who are incapable or don’t care for me" },
+      { id: 12, text: "I have suicidal thoughts" },
+      { id: 13, text: "I engage in high risk behaviors" },
+      { id: 14, text: "I eat excessively to avoid problems" },
+      { id: 15, text: "I avoid thoughts or feelings associated with my trauma experiences" },
+      { id: 16, text: "I skip vacations because of lack of time or money" },
+      { id: 17, text: "I have periods of sleeplessness" },
+      { id: 18, text: "I try to recreate an early trauma experience" },
+
+      { id: 19, text: "I keep secrets for people who have hurt me" },
+      { id: 20, text: "I have attempted suicide" },
+      { id: 21, text: "I am sexual when frightened" },
+      { id: 22, text: "I drink to excess when life is too hard" },
+      { id: 23, text: "I avoid stories, parts of movies, or reminders of early painful experiences" },
+      { id: 24, text: "I avoid sexual pleasure" },
+      { id: 25, text: "I sometimes feel like an old painful experience is happening now" },
+      { id: 26, text: "There is something destructive I do over and over from my early life" },
+      { id: 27, text: "I stay in conflict with someone when I could have walked away" },
+      { id: 28, text: "I have suicidal thoughts" },
+      { id: 29, text: "I often feel sexual when I am lonely" },
+      { id: 30, text: "I use depressant drugs as a way to cope" },
+      { id: 31, text: "I am unable to recall important details of painful experiences" },
+      { id: 32, text: "I avoid doing “normal” activities because of fears I have" },
+      { id: 33, text: "I have sudden, vivid or distracting memories of painful experiences" },
+      { id: 34, text: "I attempt to stop activities I know are not helpful" },
+      { id: 35, text: "I go “overboard” to help people who have been destructive" },
+      { id: 36, text: "I often feel lonely and estranged from others because of painful experiences I have had" },
+      { id: 37, text: "I feel intensely sexual when violence occurs" },
+      { id: 38, text: "My procrastinating interferes with my life activities" },
+      { id: 39, text: "I sometimes withdraw or have lack of interest in important activities because of childhood experiences" },
+      { id: 40, text: "I will hoard money and not spend money on legitimate needs" },
+
+      { id: 41, text: "I am upset when there are reminders of abusive experiences like anniversaries, places, or symbols" },
+      { id: 42, text: "I compulsively do things to others that were done to me as a young person" },
+      { id: 43, text: "I sometimes help those who continue to harm me" },
+      { id: 44, text: "I feel unable to experience certain emotions (love, happiness, sadness, etc.)" },
+      { id: 45, text: "I feel sexual when degraded or used" },
+      { id: 46, text: "Sleep is a way for me to avoid life problems" },
+      { id: 47, text: "I have difficulty concentrating" },
+      { id: 48, text: "I have attempted diets repeatedly" },
+      { id: 49, text: "I have difficulty sleeping" },
+      { id: 50, text: "My relationships are the same story over and over" },
+      { id: 51, text: "I feel loyal to people even though they have betrayed me" },
+      { id: 52, text: "I have a dim outlook on my future" },
+      { id: 53, text: "I feel sexual when someone is “nice” to me" },
+      { id: 54, text: "At times I am preoccupied with food and eating" },
+      { id: 55, text: "I experience confusion often" },
+      { id: 56, text: "I refuse to buy things even when I need them and have the money" },
+      { id: 57, text: "I have difficulty feeling sexual" },
+      { id: 58, text: "I know that something destructive I do repeats a childhood event" },
+      { id: 59, text: "I remain a “team” member when obviously things are becoming destructive" },
+      { id: 60, text: "I feel as if I must avoid depending on people" },
+      { id: 61, text: "I sometimes feel bad because I enjoyed experiences that were exploitive of me" },
+      { id: 62, text: "I abuse alcohol often" },
+      { id: 63, text: "I tend to be accident prone" },
+
+      { id: 64, text: "I spend much time performing “underachieving” jobs" },
+      { id: 65, text: "Sometimes I have outbursts of anger or irritability" },
+      { id: 66, text: "I do things to others that were done to me in my family" },
+      { id: 67, text: "I make repeated efforts to convince people who were destructive to me and not willing to listen" },
+      { id: 68, text: "I engage in self-destructive behaviors" },
+      { id: 69, text: "I get “high” on activities that were dangerous to me" },
+      { id: 70, text: "I use TV, reading, and hobbies as a way to numb out" },
+      { id: 71, text: "I go into a “fantasy” world when things are tough" },
+      { id: 72, text: "I am “underemployed”" },
+      { id: 73, text: "I am extremely cautious of my surroundings" },
+      { id: 74, text: "I have thoughts and behaviors repeatedly that do not feel good to me" },
+      { id: 75, text: "I attempt to be liked by people who clearly were exploiting me" },
+      { id: 76, text: "I engage in self-mutilating behaviors (cutting self, burning, bruising, etc.)" },
+      { id: 77, text: "I use drugs like cocaine or amphetamines to speed things up" },
+      { id: 78, text: "I have a problem with “putting off” certain tasks" },
+      { id: 79, text: "I use “romance” as a way to avoid problems" },
+      { id: 80, text: "I feel very guilty about any sexual activity" },
+      { id: 81, text: "I often feel that people are out to take advantage of me" },
+      { id: 82, text: "I revert to doing things I did as a child" },
+      { id: 83, text: "I am attracted to untrustworthy people" },
+      { id: 84, text: "I endure physical or emotional pain most people would not accept" },
+      { id: 85, text: "I like living on the “edge” of danger or excitement" },
+
+      { id: 86, text: "When things are difficult, I will sometimes “binge”" },
+      { id: 87, text: "I have a tendency to be preoccupied with something else than what I need to be" },
+      { id: 88, text: "I have a low interest in sexual activity" },
+      { id: 89, text: "I am distrustful of others" },
+      { id: 90, text: "Some of my recurring behavior comes from early life experiences" },
+      { id: 91, text: "I trust people who are proven unreliable" },
+      { id: 92, text: "I try to be perfect" },
+      { id: 93, text: "I am orgasmic when hurt or beaten" },
+      { id: 94, text: "I use drugs to escape" },
+      { id: 95, text: "I use marijuana or psychedelics to hallucinate" },
+      { id: 96, text: "I sometimes spoil success opportunities" },
+      { id: 97, text: "I am startled more easily than others" },
+      { id: 98, text: "I am preoccupied with children of a certain age" },
+      { id: 99, text: "I seek people who I know will cause me pain" },
+      { id: 100, text: "I avoid mistakes at any cost" },
+      { id: 101, text: "I love to “gamble” on outcomes" },
+      { id: 102, text: "I work too hard so I won’t have to feel" },
+      { id: 103, text: "I will often lose myself in fantasies rather than deal with real life" },
+      { id: 104, text: "I go “without” necessities for periods of time" },
+      { id: 105, text: "I get physical reactions to reminders of abuse experiences (breaking out in cold sweat, trouble breathing, etc.)" },
+      { id: 106, text: "I engage in abusive relationships repeatedly" },
+      { id: 107, text: "I have difficulty retreating from unhealthy relationships" },
+
+      { id: 108, text: "I sometimes want to hurt myself physically" },
+      { id: 109, text: "I need lots of stimulation so I will not be bored" },
+      { id: 110, text: "I get “lost” in my work" },
+      { id: 111, text: "I live a “double life”" },
+      { id: 112, text: "I vomit food or use diuretics to avoid weight gain" },
+      { id: 113, text: "I feel anxious about being sexual" },
+      { id: 114, text: "There is a certain age of children or adolescents that are sexually attractive to me" },
+      { id: 115, text: "I continue contact with a person who has abused me" },
+      { id: 116, text: "I often feel unworthy, unlovable, immoral, or sinful because of experiences I have had" },
+      { id: 117, text: "I like sex when it is dangerous" },
+      { id: 118, text: "I try to “slow down” my mind" },
+      { id: 119, text: "I have a life of “compartments” that others do not know about" },
+      { id: 120, text: "I experience periods of no interest in eating" },
+      { id: 121, text: "I am scared about sex" },
+      { id: 122, text: "There are activities that I have trouble stopping even though they are useless or destructive" },
+      { id: 123, text: "I am in emotional fights (divorces, lawsuits) that seem endless" },
+      { id: 124, text: "I often feel I should be punished for past behavior" },
+      { id: 125, text: "I do sexual things that are risky" },
+      { id: 126, text: "When I am anxious, I will do things to stop my feelings" },
+      { id: 127, text: "I have a fantasy life that I retreat to when things are hard" },
+      { id: 128, text: "I have difficulty with play" },
+      { id: 129, text: "I wake up with upsetting dreams" },
+
+      { id: 130, text: "My relationships seem to have the same dysfunctional pattern" },
+      { id: 131, text: "There are certain people who I always allow to take advantage of me" },
+      { id: 132, text: "I have a sense that others are always better off than me" },
+      { id: 133, text: "I use cocaine or amphetamines to heighten “high risk” activities" },
+      { id: 134, text: "I don’t tolerate uncomfortable feelings" },
+      { id: 135, text: "I am a daydreamer" },
+      { id: 136, text: "At times, I see comfort, luxuries and play activities as frivolous" },
+      { id: 137, text: "I hate it when someone approaches me sexually" },
+      { id: 138, text: "Sometimes I find children more attractive than others" },
+      { id: 139, text: "There are some people in my life who are hard to get over even though they hurt or used me badly" },
+      { id: 140, text: "I feel bad when something good happens" },
+      { id: 141, text: "I get excited/aroused when faced with dangerous situations" },
+      { id: 142, text: "I use anything to distract myself from my problems" },
+      { id: 143, text: "Sometimes I live in an “unreal” world" },
+      { id: 144, text: "There are long periods of time with no sexual activity for me" }
+    ];
+
+    const pageSize = 24;
+    const totalPages = Math.ceil(questions.length / pageSize);
+
+    // Approximate trauma cluster definitions (keyword-based)
+    const clusters = [
+      {
+        code: "TRT",
+        name: "Trauma Reactions",
+        description:
+          "Current reactions like flashbacks, intrusive memories, sleep disturbance, strong physical or emotional reactions to reminders of trauma.",
+        strategy:
+          "Explore grounding skills (breathing, orienting to the present), track triggers, and work with a trauma-informed therapist on safe ways to process memories.",
+        keywords: [
+          "flashback", "distressing dreams", "dreams", "sleepless", "sleeping", "sleeplessness",
+          "extremely cautious of my surroundings",
+          "startled", "upset when there are reminders", "anniversaries", "cold sweat",
+          "trouble breathing", "physical reactions", "scared", "afraid"
+        ]
+      },
+      {
+        code: "TR",
+        name: "Trauma Repetition",
+        description:
+          "Repeating painful patterns or relationships, recreating earlier trauma scenarios, difficulty walking away from destructive situations.",
+        strategy:
+          "Notice where your life feels like the “same story over and over.” In therapy, map these cycles, practice new boundary-setting, and experiment with different responses.",
+        keywords: [
+          "repeat painful", "repeating painful", "doing something destructive",
+          "over and over", "redo an early trauma", "recreate an early trauma",
+          "same story over and over",
+          "same dysfunctional pattern", "stay in conflict", "hard to get over",
+          "relationships are the same story", "remain a “team” member"
+        ]
+      },
+      {
+        code: "TBD",
+        name: "Trauma Bonds",
+        description:
+          "Feeling loyal, connected, or drawn to people who are dangerous, shaming, or exploitative.",
+        strategy:
+          "Gently identify relationships where harm and loyalty are mixed together. Work on naming red flags, practicing emotional distance, and building safer support.",
+        keywords: [
+          "keep secrets for people who have hurt me",
+          "loyal to people even though they have betrayed me",
+          "continue contact with a person who has abused me",
+          "attracted to untrustworthy people",
+          "people who clearly were exploiting me",
+          "hurt or used me badly",
+          "abusive relationships repeatedly"
+        ]
+      },
+      {
+        code: "TS",
+        name: "Trauma Shame",
+        description:
+          "Feeling unworthy, bad, defective, or full of shame, often about your history or sexuality.",
+        strategy:
+          "Notice inner messages like “I am bad” or “I don’t deserve good things.” In therapy, explore where those beliefs came from and begin replacing them with more compassionate truths.",
+        keywords: [
+          "feel bad at times about myself", "shameful", "unworthy", "unlovable", "immoral", "sinful",
+          "feel very guilty about any sexual activity", "should be punished", "dim outlook",
+          "enjoyed experiences that were exploitive", "feel bad when something good happens"
+        ]
+      },
+      {
+        code: "TP",
+        name: "Trauma Pleasure",
+        description:
+          "Finding excitement, intensity, or sexual arousal in danger, risk, or painful situations.",
+        strategy:
+          "Gently notice where danger and arousal are linked. With support, explore how that connection formed and practice finding excitement in safer, life-giving ways.",
+        keywords: [
+          "risk taker", "high risk behaviors", "like living on the “edge”", "excited/aroused when faced with dangerous",
+          "sexual when frightened", "sexual when degraded", "intensely sexual when violence occurs",
+          "orgasmic when hurt or beaten", "like sex when it is dangerous", "high risk activities"
+        ]
+      },
+      {
+        code: "TB",
+        name: "Trauma Blocking",
+        description:
+          "Using behaviors to numb, block, or escape feelings (food, sleep, substances, work, media).",
+        strategy:
+          "Notice what you reach for when feelings are intense (food, sleep, substances, screens, work). Gradually add small, tolerable ways to feel and express emotions safely.",
+        keywords: [
+          "eat excessively", "overeating", "preoccupied with food and eating", "diets repeatedly",
+          "sleep is a way for me to avoid life problems", "difficulty staying awake",
+          "drugs as a way to cope", "use depressant drugs", "use drugs to escape",
+          "use tv, reading, and hobbies as a way to numb out",
+          "binge", "bingeing", "work too hard so i won’t have to feel",
+          "get “lost” in my work",
+          "use anything to distract myself from my problems"
+        ]
+      },
+      {
+        code: "TSG",
+        name: "Trauma Splitting",
+        description:
+          "Disconnecting parts of your experience (fantasy vs. real life, double life, compartments, dissociation).",
+        strategy:
+          "Work toward gently bringing the different “parts” of your life and story together in safe therapy. Practices like grounding and journaling can help you stay more present.",
+        keywords: [
+          "separate from my body", "fantasy world", "fantasy life", "unreal world",
+          "double life", "life of “compartments”", "lost in my work",
+          "daydreamer", "lose myself in fantasies"
+        ]
+      },
+      {
+        code: "TA",
+        name: "Trauma Abstinence",
+        description:
+          "Depriving yourself of good things (rest, pleasure, needs) especially around success or stress.",
+        strategy:
+          "Pay attention to times you say no to comfort, rest, or basic needs. Practice small acts of self-care and allow support, especially when things are going well.",
+        keywords: [
+          "deny myself basic needs", "hoard money and not spend money",
+          "refuse to buy things even when i need them",
+          "go “without” necessities", "avoid sexual pleasure",
+          "long periods of time with no sexual activity",
+          "see comfort, luxuries and play activities as frivolous",
+          "skip vacations", "underachieving jobs", "underemployed"
+        ]
+      }
+    ];
+
+    // State
+    let currentPage = 0;
+    const answers = {}; // id -> "yes" | "no"
+
+    const questionsContainer = document.getElementById("questionsContainer");
+    const progressLabel = document.getElementById("progressLabel");
+    const progressDetail = document.getElementById("progressDetail");
+    const progressInner = document.getElementById("progressInner");
+    const btnPrev = document.getElementById("btnPrev");
+    const btnNext = document.getElementById("btnNext");
+    const btnClear = document.getElementById("btnClear");
+    const btnSave = document.getElementById("btnSave");
+    const btnStartOver = document.getElementById("btnStartOver");
+    const btnRetake = document.getElementById("btnRetake");
+    const btnStartOver2 = document.getElementById("btnStartOver2");
+
+    const questionsView = document.getElementById("questionsView");
+    const resultsView = document.getElementById("resultsView");
+    const summaryScore = document.getElementById("summaryScore");
+    const summarySub = document.getElementById("summarySub");
+    const summaryNote = document.getElementById("summaryNote");
+    const categoryGrid = document.getElementById("categoryGrid");
+    const notesBox = document.getElementById("notesBox");
+
+    function renderPage() {
+      const start = currentPage * pageSize;
+      const end = Math.min(start + pageSize, questions.length);
+      const pageQuestions = questions.slice(start, end);
+
+      questionsContainer.innerHTML = "";
+
+      pageQuestions.forEach(q => {
+        const row = document.createElement("div");
+        row.className = "question-row";
+
+        const header = document.createElement("div");
+        header.className = "question-header";
+
+        const textDiv = document.createElement("div");
+        textDiv.className = "question-text";
+        textDiv.textContent = q.text;
+
+        const indexDiv = document.createElement("div");
+        indexDiv.className = "question-index";
+        indexDiv.textContent = `#${q.id}`;
+
+        header.appendChild(textDiv);
+        header.appendChild(indexDiv);
+        row.appendChild(header);
+
+        const controls = document.createElement("div");
+        controls.className = "question-controls";
+
+        const group = document.createElement("div");
+        group.className = "toggle-group";
+
+        const yesOption = document.createElement("label");
+        yesOption.className = "toggle-option";
+        const yesInput = document.createElement("input");
+        yesInput.type = "radio";
+        yesInput.name = `q${q.id}`;
+        yesInput.value = "yes";
+        if (answers[q.id] === "yes") yesInput.checked = true;
+        const yesLabel = document.createElement("span");
+        yesLabel.className = "toggle-label";
+        yesLabel.textContent = "Yes";
+        yesOption.appendChild(yesInput);
+        yesOption.appendChild(yesLabel);
+
+        const noOption = document.createElement("label");
+        noOption.className = "toggle-option";
+        const noInput = document.createElement("input");
+        noInput.type = "radio";
+        noInput.name = `q${q.id}`;
+        noInput.value = "no";
+        if (answers[q.id] === "no") noInput.checked = true;
+        const noLabel = document.createElement("span");
+        noLabel.className = "toggle-label";
+        noLabel.textContent = "No";
+        noOption.appendChild(noInput);
+        noOption.appendChild(noLabel);
+
+        yesInput.addEventListener("change", () => { answers[q.id] = "yes"; });
+        noInput.addEventListener("change", () => { answers[q.id] = "no"; });
+
+        group.appendChild(yesOption);
+        group.appendChild(noOption);
+        controls.appendChild(group);
+        row.appendChild(controls);
+
+        questionsContainer.appendChild(row);
+      });
+
+      const pageNum = currentPage + 1;
+      progressLabel.textContent = `Page ${pageNum} of ${totalPages}`;
+      progressDetail.textContent = `Questions ${start + 1}–${end} of ${questions.length}`;
+      progressInner.style.width = `${(pageNum / totalPages) * 100}%`;
+
+      btnPrev.disabled = currentPage === 0;
+      if (currentPage === totalPages - 1) {
+        btnNext.textContent = "See My Results →";
+      } else {
+        btnNext.textContent = "Next →";
+      }
+    }
+
+    function clearCurrentPageAnswers() {
+      const start = currentPage * pageSize;
+      const end = Math.min(start + pageSize, questions.length);
+      for (let i = start; i < end; i++) {
+        delete answers[questions[i].id];
+      }
+      renderPage();
+    }
+
+    function saveProgress() {
+      try {
+        const payload = { answers, notes: notesBox.value || "", ts: Date.now() };
+        localStorage.setItem("traumaProfileAnswers", JSON.stringify(payload));
+        alert("Progress saved in this browser.\n\nNote: If you clear browser data, it may be removed.");
+      } catch {
+        alert("Could not save progress (browser storage error).");
+      }
+    }
+
+    function loadProgress() {
+      try {
+        const raw = localStorage.getItem("traumaProfileAnswers");
+        if (!raw) return;
+        const payload = JSON.parse(raw);
+        if (payload && payload.answers) {
+          Object.assign(answers, payload.answers);
+        }
+        if (payload && typeof payload.notes === "string") {
+          notesBox.value = payload.notes;
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    function estimateClusterScores() {
+      const scores = {};
+      clusters.forEach(c => { scores[c.code] = 0; });
+
+      questions.forEach(q => {
+        if (answers[q.id] !== "yes") return;
+        const text = q.text.toLowerCase();
+        clusters.forEach(cluster => {
+          const hit = cluster.keywords.some(kw => text.includes(kw.toLowerCase()));
+          if (hit) scores[cluster.code] += 1;
+        });
+      });
+
+      return scores;
+    }
+
+    function describeLevel(value, max) {
+      if (value === 0) return "No pattern detected";
+      const ratio = value / (max || 1);
+      if (ratio < 0.25) return "Mild / occasional pattern";
+      if (ratio < 0.55) return "Moderate pattern";
+      return "Strong / frequent pattern";
+    }
+
+    function showResults() {
+      const totalYes = Object.values(answers).filter(v => v === "yes").length;
+      const answeredCount = Object.keys(answers).length;
+      const total = questions.length;
+
+      const percentYes = total > 0 ? Math.round((totalYes / total) * 100) : 0;
+
+      summaryScore.textContent = `Yes: ${totalYes} / ${total} (${percentYes}%)`;
+      summarySub.textContent = `You answered ${answeredCount} of ${total} statements. ${
+        answeredCount < total
+          ? "You can still go back and complete unanswered items if you wish."
+          : "You responded to all items."
+      }`;
+
+      let note;
+      if (totalYes === 0) {
+        note =
+          "You did not endorse any items as true. If this does not match your lived experience, consider revisiting the items or discussing with a therapist.";
+      } else if (percentYes < 25) {
+        note =
+          "You endorsed a smaller subset of items. Even a few strong items can represent significant distress, so consider which ones feel most impactful and speak about them with a trusted professional.";
+      } else if (percentYes < 50) {
+        note =
+          "You endorsed a moderate number of items. This can indicate meaningful effects of trauma in your life across several areas.";
+      } else {
+        note =
+          "You endorsed many items. This can suggest that trauma may be impacting multiple areas of your life. It may be especially helpful to review this profile with a trauma-informed therapist.";
+      }
+      summaryNote.textContent = note;
+
+      const clusterScores = estimateClusterScores();
+
+      categoryGrid.innerHTML = "";
+      const maxScore = Math.max(...Object.values(clusterScores), 1);
+
+      clusters.forEach(cluster => {
+        const score = clusterScores[cluster.code] || 0;
+        const ratio = maxScore > 0 ? score / maxScore : 0;
+        const pct = maxScore > 0 ? Math.round(ratio * 100) : 0;
+        const levelText = describeLevel(score, maxScore);
+
+        const card = document.createElement("div");
+        card.className = "category-card";
+
+        const top = document.createElement("div");
+        top.className = "category-top";
+
+        const name = document.createElement("div");
+        name.className = "category-name";
+        name.textContent = `${cluster.code} · ${cluster.name}`;
+
+        const level = document.createElement("div");
+        level.className = "category-level";
+        level.textContent = `${levelText}${score ? ` · ${score} item${score === 1 ? "" : "s"}` : ""}`;
+
+        top.appendChild(name);
+        top.appendChild(level);
+
+        const barOuter = document.createElement("div");
+        barOuter.className = "category-bar-outer";
+
+        const barInner = document.createElement("div");
+        barInner.className = "category-bar-inner";
+        barInner.style.width = `${pct}%`;
+        barOuter.appendChild(barInner);
+
+        const desc = document.createElement("div");
+        desc.className = "category-text";
+        desc.textContent = cluster.description;
+
+        const strat = document.createElement("div");
+        strat.className = "category-strategy";
+        strat.textContent = `Ideas to explore: ${cluster.strategy}`;
+
+        card.appendChild(top);
+        card.appendChild(barOuter);
+        card.appendChild(desc);
+        card.appendChild(strat);
+
+        categoryGrid.appendChild(card);
+      });
+
+      questionsView.style.display = "none";
+      resultsView.style.display = "block";
+    }
+
+    function startOver() {
+      if (!confirm("This will clear all answers and notes and start over. Continue?")) return;
+      for (const key in answers) {
+        delete answers[key];
+      }
+      localStorage.removeItem("traumaProfileAnswers");
+      notesBox.value = "";
+      currentPage = 0;
+      resultsView.style.display = "none";
+      questionsView.style.display = "block";
+      renderPage();
+    }
+
+    function buildEmailBody() {
+      const totalYes = Object.values(answers).filter(v => v === "yes").length;
+      const answeredCount = Object.keys(answers).length;
+      const total = questions.length;
+      const percentYes = total > 0 ? Math.round((totalYes / total) * 100) : 0;
+
+      const clusterScores = estimateClusterScores();
+      const maxScore = Math.max(...Object.values(clusterScores), 1);
+
+      const lines = [];
+      lines.push("Post Traumatic Stress Index (Personal Use) - Summary");
+      lines.push("");
+      lines.push(`Yes responses: ${totalYes} / ${total} (${percentYes}%)`);
+      lines.push(`Items answered: ${answeredCount} / ${total}`);
+      lines.push("");
+
+      lines.push("Approximate trauma pattern clusters:");
+      clusters.forEach(cluster => {
+        const score = clusterScores[cluster.code] || 0;
+        const levelText = describeLevel(score, maxScore);
+        lines.push(
+          `${cluster.code} - ${cluster.name}: ${levelText}${
+            score ? ` (${score} item${score === 1 ? "" : "s"})` : ""
+          }`
+        );
+      });
+
+      lines.push("");
+      lines.push("Notes / reflections:");
+      const notes = notesBox.value || "";
+      lines.push(notes ? notes : "(none added)");
+      lines.push("");
+      lines.push("This summary was generated by a self-reflection tool and is not a diagnosis.");
+      return lines.join("\n");
+    }
+
+    function sendResultsByEmail() {
+      const subject = encodeURIComponent("My Post Traumatic Stress Index (personal use) results");
+      const body = encodeURIComponent(buildEmailBody());
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    }
+
+    // Event listeners
+    btnPrev.addEventListener("click", () => {
+      if (currentPage > 0) {
+        currentPage -= 1;
+        renderPage();
+      }
+    });
+
+    btnNext.addEventListener("click", () => {
+      if (currentPage === totalPages - 1) {
+        showResults();
+      } else {
+        currentPage += 1;
+        renderPage();
+      }
+    });
+
+    btnClear.addEventListener("click", clearCurrentPageAnswers);
+    btnSave.addEventListener("click", saveProgress);
+    btnStartOver.addEventListener("click", startOver);
+    btnRetake.addEventListener("click", () => {
+      resultsView.style.display = "none";
+      questionsView.style.display = "block";
+      renderPage();
+    });
+    btnStartOver2.addEventListener("click", startOver);
+
+    // Initialize
+    loadProgress();
+    renderPage();
+  </script>
+</body>
+</html>
