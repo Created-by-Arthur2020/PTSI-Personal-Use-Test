@@ -1,377 +1,46 @@
- (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
-diff --git a/index.html b/index.html
-index 1f1b4a2b8a7dea517fd7237eb48c1e33d2803adc..9c45dc2900745e17b403efe4d1f529035fb3855f 100644
---- a/index.html
-+++ b/index.html
-@@ -354,50 +354,88 @@
-       width: 100%;
-       min-height: 110px;
-       border-radius: 10px;
-       border: 1px solid #e5e7eb;
-       padding: 8px 9px;
-       font-size: 0.9rem;
-       resize: vertical;
-       outline: none;
-     }
-     .notes-textarea:focus {
-       border-color: #111827;
-       box-shadow: 0 0 0 1px #11182722;
-     }
- 
-     .results-actions {
-       margin-top: 14px;
-       display: flex;
-       flex-wrap: wrap;
-       gap: 10px;
-       justify-content: flex-start;
-       align-items: center;
-       font-size: 0.8rem;
-       color: var(--text-muted);
-     }
- 
-+    .email-help {
-+      margin-top: 12px;
-+      border: 1px solid var(--border);
-+      border-radius: var(--radius-md);
-+      padding: 10px 12px;
-+      background: #f9fafb;
-+    }
-+
-+    .email-help-top {
-+      display: flex;
-+      justify-content: space-between;
-+      align-items: center;
-+      gap: 8px;
-+      margin-bottom: 6px;
-+      flex-wrap: wrap;
-+    }
-+
-+    .email-help-title {
-+      font-weight: 600;
-+    }
-+
-+    .email-status {
-+      font-size: 0.85rem;
-+      color: var(--text-muted);
-+      margin-bottom: 6px;
-+    }
-+
-+    .email-body-preview {
-+      width: 100%;
-+      min-height: 120px;
-+      border-radius: 10px;
-+      border: 1px solid var(--border);
-+      padding: 10px;
-+      font-size: 0.9rem;
-+      resize: vertical;
-+      background: #fff;
-+    }
-+
-     @media (max-width: 640px) {
-       .app {
-         padding: 18px 14px 22px;
-         border-radius: 18px;
-       }
-       .questions-list {
-         max-height: 60vh;
-       }
-       .question-header {
-         flex-direction: column;
-       }
-       .question-index {
-         text-align: left;
-       }
-       .nav-buttons {
-         flex-direction: column-reverse;
-         align-items: stretch;
-       }
-       .nav-buttons-left,
-       .nav-buttons-right {
-         width: 100%;
-         justify-content: space-between;
-       }
-       .nav-buttons-right {
-         justify-content: flex-end;
-@@ -496,50 +534,59 @@
-       <h2 style="font-size:1rem; margin-bottom:4px;">Trauma pattern clusters (approximate)</h2>
-       <p class="small-hint">
-         These clusters are estimated by matching your “Yes” answers to common trauma themes from Carnes’ model
-         (reactions, repetition, bonds, shame, pleasure, blocking, splitting, abstinence).
-         Use this as a conversation starter with a therapist, not as a diagnosis.
-       </p>
- 
-       <div class="category-grid" id="categoryGrid"></div>
- 
-       <div class="notes-card">
-         <h3>Notes &amp; reflections</h3>
-         <p>
-           Use this space to jot down anything that stands out, memories that surfaced, questions for a therapist,
-           or next steps you’d like to take. This box will appear if you print or save this page as a PDF.
-         </p>
-         <textarea class="notes-textarea" id="notesBox" placeholder="For example: patterns I notice, things that feel especially intense, people I might want support from, or questions I’d like to ask in counseling..."></textarea>
-       </div>
- 
-       <div class="results-actions">
-         <button class="btn-secondary" id="btnRetake">Edit My Answers</button>
-         <button class="btn-ghost" id="btnStartOver2">Start Over</button>
-         <button class="btn-secondary" onclick="sendResultsByEmail()">Send results to my email</button>
-         <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
-         <span>Note: The email button opens your email app with a pre-filled summary. Your answers are not sent to any server.</span>
-       </div>
-+
-+      <div class="email-help" id="emailHelp">
-+        <div class="email-help-top">
-+          <div class="email-help-title">If your email app doesn’t open, copy the summary below.</div>
-+          <button class="btn-ghost" id="btnCopyEmail">Copy summary</button>
-+        </div>
-+        <div class="email-status" id="emailStatus">Click "Send results to my email" first. If nothing opens, paste this summary into your email.</div>
-+        <textarea class="email-body-preview" id="emailBodyPreview" readonly></textarea>
-+      </div>
-     </div>
-   </div>
- 
-   <script>
-     // -----------------------------
-     // Question data (144 items)
-     // -----------------------------
-     const questions = [
-       { id: 1, text: "I have recurring memories of painful experiences" },
-       { id: 2, text: "I am unable to stop a childhood pattern harmful to myself" },
-       { id: 3, text: "I sometimes obsess about people who have hurt me and are now gone" },
-       { id: 4, text: "I feel bad at times about myself because of shameful experiences I believe were my fault" },
-       { id: 5, text: "I am a risk taker" },
-       { id: 6, text: "At times, I have difficulty staying awake" },
-       { id: 7, text: "I sometimes feel separate from my body as a reaction to a flashback or memory" },
-       { id: 8, text: "I deny myself basic needs at times like groceries, shoes, books, medical care, rent and heat" },
-       { id: 9, text: "I have distressing dreams about experiences" },
-       { id: 10, text: "I repeat painful experiences over and over" },
-       { id: 11, text: "I try to be understood by those who are incapable or don’t care for me" },
-       { id: 12, text: "I have suicidal thoughts" },
-       { id: 13, text: "I engage in high risk behaviors" },
-       { id: 14, text: "I eat excessively to avoid problems" },
-       { id: 15, text: "I avoid thoughts or feelings associated with my trauma experiences" },
-       { id: 16, text: "I skip vacations because of lack of time or money" },
-       { id: 17, text: "I have periods of sleeplessness" },
-@@ -804,50 +851,53 @@
-     ];
- 
-     // State
-     let currentPage = 0;
-     const answers = {}; // id -> "yes" | "no"
- 
-     const questionsContainer = document.getElementById("questionsContainer");
-     const progressLabel = document.getElementById("progressLabel");
-     const progressDetail = document.getElementById("progressDetail");
-     const progressInner = document.getElementById("progressInner");
-     const btnPrev = document.getElementById("btnPrev");
-     const btnNext = document.getElementById("btnNext");
-     const btnClear = document.getElementById("btnClear");
-     const btnSave = document.getElementById("btnSave");
-     const btnStartOver = document.getElementById("btnStartOver");
-     const btnRetake = document.getElementById("btnRetake");
-     const btnStartOver2 = document.getElementById("btnStartOver2");
- 
-     const questionsView = document.getElementById("questionsView");
-     const resultsView = document.getElementById("resultsView");
-     const summaryScore = document.getElementById("summaryScore");
-     const summarySub = document.getElementById("summarySub");
-     const summaryNote = document.getElementById("summaryNote");
-     const categoryGrid = document.getElementById("categoryGrid");
-     const notesBox = document.getElementById("notesBox");
-+    const emailStatus = document.getElementById("emailStatus");
-+    const emailBodyPreview = document.getElementById("emailBodyPreview");
-+    const btnCopyEmail = document.getElementById("btnCopyEmail");
- 
-     function renderPage() {
-       const start = currentPage * pageSize;
-       const end = Math.min(start + pageSize, questions.length);
-       const pageQuestions = questions.slice(start, end);
- 
-       questionsContainer.innerHTML = "";
- 
-       pageQuestions.forEach(q => {
-         const row = document.createElement("div");
-         row.className = "question-row";
- 
-         const header = document.createElement("div");
-         header.className = "question-header";
- 
-         const textDiv = document.createElement("div");
-         textDiv.className = "question-text";
-         textDiv.textContent = q.text;
- 
-         const indexDiv = document.createElement("div");
-         indexDiv.className = "question-index";
-         indexDiv.textContent = `#${q.id}`;
- 
-         header.appendChild(textDiv);
-         header.appendChild(indexDiv);
-@@ -1028,117 +1078,163 @@
- 
-         const barOuter = document.createElement("div");
-         barOuter.className = "category-bar-outer";
- 
-         const barInner = document.createElement("div");
-         barInner.className = "category-bar-inner";
-         barInner.style.width = `${pct}%`;
-         barOuter.appendChild(barInner);
- 
-         const desc = document.createElement("div");
-         desc.className = "category-text";
-         desc.textContent = cluster.description;
- 
-         const strat = document.createElement("div");
-         strat.className = "category-strategy";
-         strat.textContent = `Ideas to explore: ${cluster.strategy}`;
- 
-         card.appendChild(top);
-         card.appendChild(barOuter);
-         card.appendChild(desc);
-         card.appendChild(strat);
- 
-         categoryGrid.appendChild(card);
-       });
- 
-+      updateEmailPreview();
-+      emailStatus.textContent =
-+        'Click "Send results to my email" first. If nothing opens, paste this summary into your email.';
-+
-       questionsView.style.display = "none";
-       resultsView.style.display = "block";
-     }
- 
-     function startOver() {
-       if (!confirm("This will clear all answers and notes and start over. Continue?")) return;
-       for (const key in answers) {
-         delete answers[key];
-       }
-       localStorage.removeItem("traumaProfileAnswers");
-       notesBox.value = "";
-+      emailBodyPreview.value = "";
-+      emailStatus.textContent =
-+        'Click "Send results to my email" first. If nothing opens, paste this summary into your email.';
-       currentPage = 0;
-       resultsView.style.display = "none";
-       questionsView.style.display = "block";
-       renderPage();
-     }
- 
-     function buildEmailBody() {
-       const totalYes = Object.values(answers).filter(v => v === "yes").length;
-       const answeredCount = Object.keys(answers).length;
-       const total = questions.length;
-       const percentYes = total > 0 ? Math.round((totalYes / total) * 100) : 0;
- 
-       const clusterScores = estimateClusterScores();
-       const maxScore = Math.max(...Object.values(clusterScores), 1);
- 
-       const lines = [];
-       lines.push("Post Traumatic Stress Index (Personal Use) - Summary");
-       lines.push("");
-       lines.push(`Yes responses: ${totalYes} / ${total} (${percentYes}%)`);
-       lines.push(`Items answered: ${answeredCount} / ${total}`);
-       lines.push("");
- 
-       lines.push("Approximate trauma pattern clusters:");
-       clusters.forEach(cluster => {
-         const score = clusterScores[cluster.code] || 0;
-         const levelText = describeLevel(score, maxScore);
-         lines.push(
-           `${cluster.code} - ${cluster.name}: ${levelText}${
-             score ? ` (${score} item${score === 1 ? "" : "s"})` : ""
-           }`
-         );
-       });
- 
-       lines.push("");
-       lines.push("Notes / reflections:");
-       const notes = notesBox.value || "";
-       lines.push(notes ? notes : "(none added)");
-       lines.push("");
-       lines.push("This summary was generated by a self-reflection tool and is not a diagnosis.");
-       return lines.join("\n");
-     }
- 
-+    function updateEmailPreview() {
-+      const body = buildEmailBody();
-+      if (emailBodyPreview) {
-+        emailBodyPreview.value = body;
-+      }
-+      return body;
-+    }
-+
-+    function copyEmailSummary() {
-+      const body = updateEmailPreview();
-+      if (!body) return;
-+      if (navigator.clipboard?.writeText) {
-+        navigator.clipboard.writeText(body).then(() => {
-+          emailStatus.textContent = "Summary copied. Paste it into your email draft.";
-+        }).catch(() => {
-+          emailStatus.textContent = "Copy failed. You can also manually select the text below.";
-+        });
-+      } else {
-+        emailBodyPreview.select();
-+        document.execCommand("copy");
-+        emailStatus.textContent = "Summary copied. Paste it into your email draft.";
-+      }
-+    }
-+
-     function sendResultsByEmail() {
-       const subject = encodeURIComponent("My Post Traumatic Stress Index (personal use) results");
--      const body = encodeURIComponent(buildEmailBody());
--      window.location.href = `mailto:?subject=${subject}&body=${body}`;
-+      const bodyText = updateEmailPreview();
-+      const body = encodeURIComponent(bodyText);
-+      emailStatus.textContent = "Trying to open your default email app...";
-+
-+      const link = document.createElement("a");
-+      link.href = `mailto:?subject=${subject}&body=${body}`;
-+      link.style.display = "none";
-+      link.setAttribute("aria-hidden", "true");
-+      document.body.appendChild(link);
-+      link.click();
-+      link.remove();
-+
-+      setTimeout(() => {
-+        emailStatus.textContent =
-+          "If nothing opened, copy the summary below and paste it into your email app.";
-+      }, 400);
-     }
- 
-     // Event listeners
-     btnPrev.addEventListener("click", () => {
-       if (currentPage > 0) {
-         currentPage -= 1;
-         renderPage();
-       }
-     });
- 
-     btnNext.addEventListener("click", () => {
-       if (currentPage === totalPages - 1) {
-         showResults();
-       } else {
-         currentPage += 1;
-         renderPage();
-       }
-     });
- 
-     btnClear.addEventListener("click", clearCurrentPageAnswers);
-     btnSave.addEventListener("click", saveProgress);
-     btnStartOver.addEventListener("click", startOver);
-     btnRetake.addEventListener("click", () => {
-       resultsView.style.display = "none";
-       questionsView.style.display = "block";
-       renderPage();
-     });
-     btnStartOver2.addEventListener("click", startOver);
-+    btnCopyEmail.addEventListener("click", copyEmailSummary);
- 
-     // Initialize
-     loadProgress();
-     renderPage();
-   </script>
- </body>
- </html>
- 
-EOF
-)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Traumatic Stress Index (PTSI)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 40px;
+            text-align: center;
+        }
+        .card {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        p {
+            color: #444;
+        }
+        .note {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>PTSI Test Under Maintenance</h1>
+    <p>Your file is being repaired. The interactive trauma test will be live shortly.</p>
+    <p class="note">Created by Arthur • Based on the Post Traumatic Stress Index by Patrick J. Carnes & David Delmonico</p>
+</div>
+
+</body>
+</html>
