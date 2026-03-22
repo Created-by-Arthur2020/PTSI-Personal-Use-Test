@@ -1,672 +1,632 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Post Traumatic Stress Index (Personal Use)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    :root {
-      --bg: #f3f4f6;
-      --card: #ffffff;
-      --border: #e5e7eb;
-      --border-soft: #f3f4f6;
-      --text-main: #111827;
-      --text-muted: #6b7280;
-      --primary: #111827;
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --shadow: 0 18px 40px rgba(15,23,42,0.12);
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    body {
-      background: radial-gradient(circle at top, #e5e7eb, #f3f4f6 45%, #e5e7eb 100%);
-      color: var(--text-main);
-      padding: 20px;
-    }
-    .app {
-      max-width: 980px;
-      margin: 0 auto;
-      background: var(--card);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      padding: 22px 20px 26px;
-    }
-    header {
-      margin-bottom: 14px;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: #e5e7eb;
-      color: #374151;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-    }
-    h1 {
-      font-size: 1.6rem;
-      margin-top: 6px;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-    }
-    .subtitle {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      max-width: 640px;
-    }
-    .disclaimer {
-      margin-top: 10px;
-      background: #fffbeb;
-      border: 1px solid #fef3c7;
-      border-radius: 14px;
-      padding: 10px 12px;
-      font-size: 0.85rem;
-      color: #92400e;
-    }
-    .disclaimer strong {
-      font-weight: 600;
-    }
-
-    .progress {
-      margin: 14px 0 18px;
-    }
-    .progress-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-    .progress-bar-outer {
-      width: 100%;
-      height: 8px;
-      border-radius: 999px;
-      background: #e5e7eb;
-      overflow: hidden;
-    }
-    .progress-bar-inner {
-      height: 100%;
-      width: 0;
-      background: #111827;
-      transition: width 0.2s ease-out;
-    }
-
-    .view {
-      margin-top: 4px;
-    }
-
-    .questions-card {
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      background: #f9fafb;
-      padding: 10px;
-    }
-
-    .questions-list {
-      max-height: 58vh;
-      overflow-y: auto;
-      border-radius: 14px;
-      border: 1px solid var(--border-soft);
-      background: #ffffff;
-    }
-
-    .question-row {
-      padding: 10px 12px;
-      border-bottom: 1px solid #f3f4f6;
-    }
-    .question-row:nth-child(even) {
-      background: #f9fafb;
-    }
-    .question-header {
-      display: flex;
-      gap: 10px;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-    .question-index {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      min-width: 40px;
-      text-align: right;
-      white-space: nowrap;
-    }
-    .question-text {
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-    .question-controls {
-      margin-top: 7px;
-      display: inline-flex;
-      gap: 8px;
-    }
-
-    .toggle-group {
-      display: inline-flex;
-      border-radius: 999px;
-      background: #f3f4f6;
-      padding: 2px;
-      border: 1px solid #e5e7eb;
-    }
-    .toggle-option {
-      position: relative;
-    }
-    .toggle-option input {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-    }
-    .toggle-label {
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      color: #4b5563;
-      user-select: none;
-      transition: all 0.12s ease-out;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .toggle-option input:checked + .toggle-label {
-      background: #111827;
-      color: #f9fafb;
-      box-shadow: 0 10px 20px rgba(15,23,42,0.25);
-    }
-
-    .nav-buttons {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 12px;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .nav-buttons-left,
-    .nav-buttons-right {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    button {
-      border-radius: 999px;
-      border: none;
-      font-size: 0.9rem;
-      padding: 8px 14px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.12s ease, transform 0.08s ease, box-shadow 0.12s ease;
-      white-space: nowrap;
-    }
-    .btn-primary {
-      background: #111827;
-      color: #f9fafb;
-      box-shadow: 0 12px 24px rgba(15,23,42,0.3);
-    }
-    .btn-secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-muted);
-    }
-    button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 20px rgba(15,23,42,0.15);
-    }
-    button:active {
-      transform: translateY(0);
-      box-shadow: none;
-    }
-
-    .small-hint {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-
-    #resultsView {
-      display: none;
-    }
-    .summary-card {
-      margin-top: 10px;
-      margin-bottom: 14px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      padding: 12px 14px;
-      background: #f9fafb;
-    }
-    .summary-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
-    .summary-title {
-      font-weight: 600;
-    }
-    .summary-pill {
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: #111827;
-      color: #f9fafb;
-      font-size: 0.8rem;
-      white-space: nowrap;
-    }
-    .summary-body {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    .notes-card {
-      margin-top: 12px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      padding: 12px 14px;
-      background: #ffffff;
-    }
-    .notes-card h3 {
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-    }
-    .notes-card p {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-    .notes-textarea {
-      width: 100%;
-      min-height: 110px;
-      border-radius: 10px;
-      border: 1px solid #e5e7eb;
-      padding: 8px 9px;
-      font-size: 0.9rem;
-      resize: vertical;
-      outline: none;
-    }
-    .notes-textarea:focus {
-      border-color: #111827;
-      box-shadow: 0 0 0 1px #11182722;
-    }
-
-    .results-actions {
-      margin-top: 14px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: flex-start;
-      align-items: center;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    @media (max-width: 640px) {
-      .app {
-        padding: 18px 14px 22px;
-        border-radius: 18px;
+<html>
+  <head>
+    <base target="_top" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Autonomous Delivery Lead</title>
+    <style>
+      :root {
+        --bg: #f4f7fb;
+        --panel: #ffffff;
+        --panel-alt: #f8fafc;
+        --text: #0f172a;
+        --muted: #475569;
+        --border: #dbe4f0;
+        --primary: #1d4ed8;
+        --primary-dark: #1e3a8a;
+        --accent: #0f766e;
+        --warning: #b45309;
+        --danger: #b91c1c;
+        --shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+        --radius: 18px;
       }
-      .questions-list {
-        max-height: 60vh;
-      }
-      .question-header {
-        flex-direction: column;
-      }
-      .question-index {
-        text-align: left;
-      }
-      .nav-buttons {
-        flex-direction: column-reverse;
-        align-items: stretch;
-      }
-      .nav-buttons-left,
-      .nav-buttons-right {
-        width: 100%;
-        justify-content: space-between;
-      }
-      .nav-buttons-right {
-        justify-content: flex-end;
-      }
-      button {
-        flex: 1 1 auto;
-        justify-content: center;
-      }
-    }
 
-    @media print {
+      * { box-sizing: border-box; }
       body {
-        background: #ffffff;
-        padding: 0;
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: linear-gradient(180deg, #eff6ff 0%, var(--bg) 30%, #eef2ff 100%);
+        color: var(--text);
       }
-      .app {
-        box-shadow: none;
-        border-radius: 0;
+
+      .shell {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 24px;
       }
-      #questionsView {
-        display: none !important;
+
+      .hero {
+        background: linear-gradient(135deg, #0f172a, #1d4ed8 65%, #0f766e);
+        color: white;
+        border-radius: 28px;
+        padding: 28px;
+        box-shadow: var(--shadow);
       }
-      #resultsView {
-        display: block !important;
+
+      .eyebrow {
+        display: inline-flex;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.14);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
+
+      .hero h1 {
+        margin: 12px 0 10px;
+        font-size: clamp(2rem, 3vw, 3.1rem);
+        line-height: 1.05;
+      }
+
+      .hero p {
+        max-width: 860px;
+        color: rgba(255,255,255,0.88);
+        line-height: 1.55;
+        margin: 0;
+      }
+
+      .hero-grid,
+      .grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .hero-grid {
+        margin-top: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .hero-card,
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-card {
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.14);
+        padding: 18px;
+      }
+
+      .hero-card strong {
+        display: block;
+        font-size: 1.45rem;
+      }
+
+      .grid {
+        margin-top: 22px;
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: start;
+      }
+
+      .stack { display: grid; gap: 18px; }
+      .panel { padding: 20px; }
+      .panel h2,
+      .panel h3 {
+        margin: 0 0 8px;
+      }
+      .panel p,
+      .muted {
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        font-size: 0.95rem;
+        color: var(--text);
+        margin-top: 10px;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: white;
+        color: var(--text);
+        padding: 12px 14px;
+        font: inherit;
+      }
+
+      textarea { min-height: 120px; resize: vertical; }
+      .compact textarea { min-height: 90px; }
+
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
       button {
-        display: none !important;
+        border: none;
+        border-radius: 999px;
+        padding: 11px 16px;
+        font: inherit;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
       }
-    }
-  </style>
-</head>
-<body>
-  <div class="app">
-    <header>
-      <div class="pill">Self-reflection · Trauma Profile</div>
-      <h1>Post Traumatic Stress Index</h1>
-      <p class="subtitle">
-        Based on the Post Traumatic Stress Index shared by Raquel, created by Patrick J. Carnes, Ph.D., & David L. Delmonico, M.Ed.
-      </p>
-      <div class="disclaimer">
-        <strong>Important:</strong> This tool is for personal reflection only. It does not diagnose PTSD or any
-        mental health condition. If you are thinking of harming yourself or others, please contact emergency
-        services or a crisis line (for example, 988 in the U.S.) and reach out for professional support.
-      </div>
-    </header>
 
-    <div class="progress" id="progressBar">
-      <div class="progress-top">
-        <div id="progressLabel">Page 1 of 6</div>
-        <div id="progressDetail">Questions 1–24 of 144</div>
-      </div>
-      <div class="progress-bar-outer">
-        <div class="progress-bar-inner" id="progressInner"></div>
-      </div>
-    </div>
+      button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 24px rgba(15,23,42,0.12);
+      }
 
-    <div id="questionsView" class="view">
-      <div class="questions-card">
-        <div class="questions-list" id="questionsContainer"></div>
+      .primary { background: var(--primary); color: white; }
+      .secondary { background: #e2e8f0; color: var(--text); }
+      .ghost { background: transparent; color: var(--primary-dark); border: 1px solid var(--border); }
+      .danger { background: #fee2e2; color: var(--danger); }
 
-        <div class="nav-buttons">
-          <div class="nav-buttons-left">
-            <button class="btn-secondary" id="btnPrev" disabled>&larr; Back</button>
-            <button class="btn-ghost" id="btnClear">Clear This Page</button>
-            <button class="btn-ghost" id="btnStartOver">Start Over</button>
-          </div>
-          <div class="nav-buttons-right">
-            <button class="btn-secondary" id="btnSave">Save Progress</button>
-            <button class="btn-primary" id="btnNext">Next &rarr;</button>
-          </div>
-        </div>
-        <p class="small-hint">
-          Answer with “Yes” if the statement has ever been true at any point in your life. You can move between pages
-          without losing answers during this session.
-        </p>
-      </div>
-    </div>
+      .status {
+        margin-top: 16px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: #ecfeff;
+        color: #155e75;
+        display: none;
+      }
 
-    <div id="resultsView" class="view">
-      <div class="summary-card">
-        <div class="summary-header">
-          <div>
-            <div class="summary-title">Your trauma profile snapshot</div>
-            <div id="summarySub" class="summary-body" style="margin-top:4px;"></div>
-          </div>
-          <div class="summary-pill" id="summaryScore">Score: 0 / 144</div>
-        </div>
-        <div class="summary-body" id="summaryNote"></div>
-      </div>
+      .status.warning {
+        display: block;
+        background: #fff7ed;
+        color: var(--warning);
+      }
 
-      <div class="notes-card">
-        <h3>Notes &amp; reflections</h3>
+      .status.show { display: block; }
+
+      .list,
+      .cards {
+        display: grid;
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .card {
+        background: var(--panel-alt);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 16px;
+      }
+
+      .card strong { display: block; margin-bottom: 6px; }
+      .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+      .pill {
+        display: inline-flex;
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: #dbeafe;
+        color: #1e3a8a;
+        font-size: 0.82rem;
+      }
+
+      .two-up {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 12px;
+      }
+
+      ul { margin: 10px 0 0 18px; padding: 0; }
+      li { margin: 6px 0; line-height: 1.45; }
+      code.inline { background: #eff6ff; padding: 2px 7px; border-radius: 999px; }
+
+      @media (max-width: 980px) {
+        .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <section class="hero">
+        <div class="eyebrow">Google Apps Script • Autonomous PM + Delivery Lead</div>
+        <h1>Autonomous Delivery Lead Workspace</h1>
         <p>
-          Use this space to jot down anything that stands out, memories that surfaced, questions for a therapist,
-          or next steps you’d like to take. This box will appear if you print or save this page as a PDF.
+          This agent keeps a living project charter, ingests documents as you add them, and continuously produces
+          SAFe-style planning outputs with Six Sigma Black Belt improvement lenses. You can evolve its purpose over time
+          without rebuilding the app.
         </p>
-        <textarea class="notes-textarea" id="notesBox" placeholder="For example: patterns I notice, things that feel especially intense, people I might want support from, or questions I’d like to ask in counseling..."></textarea>
-      </div>
+        <div class="hero-grid">
+          <div class="hero-card"><strong id="heroDirectiveCount">0</strong><span>Directions captured</span></div>
+          <div class="hero-card"><strong id="heroArtifactCount">0</strong><span>Artifacts ingested</span></div>
+          <div class="hero-card"><strong id="heroCadence">Weekly</strong><span>Recommended review cadence</span></div>
+        </div>
+      </section>
 
-      <div class="results-actions">
-        <button class="btn-secondary" id="btnRetake">Edit My Answers</button>
-        <button class="btn-ghost" id="btnStartOver2">Start Over</button>
-        <button class="btn-secondary" onclick="sendResultsByEmail()">Send results to my email</button>
-        <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
-        <span>Note: The email button opens your email app with a pre-filled summary. Your answers are not sent to any server.</span>
-      </div>
+      <section class="grid">
+        <div class="stack">
+          <div class="panel">
+            <h2>1) Agent profile</h2>
+            <p>Define how the agent should think, what success means, and which operating model it should follow.</p>
+            <div class="field-grid">
+              <label>Agent name
+                <input id="agentName" placeholder="Autonomous Delivery Lead" />
+              </label>
+              <label>Preferred model
+                <select id="preferredModel">
+                  <option value="heuristic">Heuristic planner only</option>
+                  <option value="openai">OpenAI (requires OPENAI_API_KEY)</option>
+                  <option value="gemini">Gemini (requires GEMINI_API_KEY)</option>
+                </select>
+              </label>
+            </div>
+            <label>Mission
+              <textarea id="agentMission"></textarea>
+            </label>
+            <label>Operating model
+              <textarea id="operatingModel"></textarea>
+            </label>
+            <div class="field-grid compact">
+              <label>SAFe context
+                <textarea id="safeContext"></textarea>
+              </label>
+              <label>Six Sigma Black Belt focus
+                <textarea id="blackBeltFocus"></textarea>
+              </label>
+            </div>
+            <label>Constraints / non-negotiables
+              <textarea id="constraints"></textarea>
+            </label>
+            <div class="button-row">
+              <button class="primary" onclick="saveProfile()">Save profile</button>
+              <button class="ghost" onclick="runCycle()">Run autonomous cycle</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h2>2) Add new direction</h2>
+            <p>Paste new goals, pivots, stakeholder guidance, or changed objectives. The agent will refresh the charter and backlog.</p>
+            <label>Title
+              <input id="directiveTitle" placeholder="Example: Shift focus to client onboarding automation" />
+            </label>
+            <label>Detailed direction
+              <textarea id="directiveDetail" placeholder="Describe the new purpose, sponsor expectation, scope shift, stakeholder notes, or measurable outcome."></textarea>
+            </label>
+            <div class="field-grid">
+              <label>Source
+                <input id="directiveSource" placeholder="sponsor meeting, email, workshop" />
+              </label>
+              <label>Impact
+                <select id="directiveImpact">
+                  <option value="high">High</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="low">Low</option>
+                </select>
+              </label>
+            </div>
+            <div class="button-row">
+              <button class="primary" onclick="submitDirective()">Capture direction</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h2>3) Ingest documents and files</h2>
+            <p>
+              Add a Google Drive file ID/URL, or paste document text directly. Apps Script will read Google Docs and text-based files,
+              then store a summary for future autonomous planning cycles.
+            </p>
+            <div class="field-grid">
+              <label>Artifact title
+                <input id="artifactTitle" placeholder="Quarterly roadmap notes" />
+              </label>
+              <label>Source type
+                <select id="artifactType">
+                  <option value="drive">Google Drive</option>
+                  <option value="meeting-notes">Meeting notes</option>
+                  <option value="brief">Brief / requirements</option>
+                  <option value="manual">Manual text</option>
+                </select>
+              </label>
+            </div>
+            <label>Drive URL or file ID
+              <input id="artifactDriveRef" placeholder="Optional: https://drive.google.com/... or raw file ID" />
+            </label>
+            <label>Description
+              <textarea id="artifactDescription" placeholder="What is this file and why does it matter?"></textarea>
+            </label>
+            <label>Paste text content
+              <textarea id="artifactContent" placeholder="Optional: paste document excerpts, meeting notes, decisions, SOPs, or any text you want the agent to learn from."></textarea>
+            </label>
+            <div class="button-row">
+              <button class="primary" onclick="submitArtifact()">Ingest artifact</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="panel">
+            <h2>Live autonomous plan</h2>
+            <p class="muted">The latest cycle continuously converts your inputs into backlog items, SAFe outputs, and Six Sigma guidance.</p>
+            <div id="planSummary" class="card">Loading plan…</div>
+            <div class="status" id="statusBox"></div>
+          </div>
+
+          <div class="panel">
+            <h3>Backlog</h3>
+            <div id="backlogList" class="cards"></div>
+          </div>
+
+          <div class="panel">
+            <h3>SAFe format</h3>
+            <div id="safeOutputs" class="cards"></div>
+          </div>
+
+          <div class="panel">
+            <h3>Six Sigma Black Belt outputs</h3>
+            <div id="sigmaOutputs" class="cards"></div>
+          </div>
+
+          <div class="panel">
+            <h3>Recent directives</h3>
+            <div id="directiveList" class="list"></div>
+          </div>
+
+          <div class="panel">
+            <h3>Knowledge base</h3>
+            <div id="artifactList" class="list"></div>
+            <div class="button-row">
+              <button class="danger" onclick="resetWorkspace()">Reset workspace</button>
+            </div>
+            <p class="muted">Tip: set <code class="inline">OPENAI_API_KEY</code> or <code class="inline">GEMINI_API_KEY</code> in Script Properties if you want optional model-generated narrative on top of the heuristic planning engine.</p>
+          </div>
+        </div>
+      </section>
     </div>
-  </div>
 
-  <script>
-    const questions = [];
-    for (let i = 1; i <= 144; i++) {
-      questions.push({ id: i, text: "Question " + i + " (placeholder text – you can replace with full wording later)" });
-    }
+    <script>
+      let appState = null;
 
-    const pageSize = 24;
-    const totalPages = Math.ceil(questions.length / pageSize);
-    let currentPage = 0;
-    const answers = {};
-
-    const questionsContainer = document.getElementById("questionsContainer");
-    const progressLabel = document.getElementById("progressLabel");
-    const progressDetail = document.getElementById("progressDetail");
-    const progressInner = document.getElementById("progressInner");
-    const btnPrev = document.getElementById("btnPrev");
-    const btnNext = document.getElementById("btnNext");
-    const btnClear = document.getElementById("btnClear");
-    const btnSave = document.getElementById("btnSave");
-    const btnStartOver = document.getElementById("btnStartOver");
-    const btnRetake = document.getElementById("btnRetake");
-    const btnStartOver2 = document.getElementById("btnStartOver2");
-    const questionsView = document.getElementById("questionsView");
-    const resultsView = document.getElementById("resultsView");
-    const summaryScore = document.getElementById("summaryScore");
-    const summarySub = document.getElementById("summarySub");
-    const summaryNote = document.getElementById("summaryNote");
-    const notesBox = document.getElementById("notesBox");
-
-    function renderPage() {
-      const start = currentPage * pageSize;
-      const end = Math.min(start + pageSize, questions.length);
-      const pageQuestions = questions.slice(start, end);
-
-      questionsContainer.innerHTML = "";
-
-      pageQuestions.forEach(q => {
-        const row = document.createElement("div");
-        row.className = "question-row";
-
-        const header = document.createElement("div");
-        header.className = "question-header";
-
-        const textDiv = document.createElement("div");
-        textDiv.className = "question-text";
-        textDiv.textContent = q.text;
-
-        const indexDiv = document.createElement("div");
-        indexDiv.className = "question-index";
-        indexDiv.textContent = `#${q.id}`;
-
-        header.appendChild(textDiv);
-        header.appendChild(indexDiv);
-        row.appendChild(header);
-
-        const controls = document.createElement("div");
-        controls.className = "question-controls";
-
-        const group = document.createElement("div");
-        group.className = "toggle-group";
-
-        const yesOption = document.createElement("label");
-        yesOption.className = "toggle-option";
-        const yesInput = document.createElement("input");
-        yesInput.type = "radio";
-        yesInput.name = `q${q.id}`;
-        yesInput.value = "yes";
-        if (answers[q.id] === "yes") yesInput.checked = true;
-        const yesLabel = document.createElement("span");
-        yesLabel.className = "toggle-label";
-        yesLabel.textContent = "Yes";
-        yesOption.appendChild(yesInput);
-        yesOption.appendChild(yesLabel);
-
-        const noOption = document.createElement("label");
-        noOption.className = "toggle-option";
-        const noInput = document.createElement("input");
-        noInput.type = "radio";
-        noInput.name = `q${q.id}`;
-        noInput.value = "no";
-        if (answers[q.id] === "no") noInput.checked = true;
-        const noLabel = document.createElement("span");
-        noLabel.className = "toggle-label";
-        noLabel.textContent = "No";
-        noOption.appendChild(noInput);
-        noOption.appendChild(noLabel);
-
-        yesInput.addEventListener("change", () => { answers[q.id] = "yes"; });
-        noInput.addEventListener("change", () => { answers[q.id] = "no"; });
-
-        group.appendChild(yesOption);
-        group.appendChild(noOption);
-        controls.appendChild(group);
-        row.appendChild(controls);
-
-        questionsContainer.appendChild(row);
-      });
-
-      const pageNum = currentPage + 1;
-      progressLabel.textContent = `Page ${pageNum} of ${totalPages}`;
-      progressDetail.textContent = `Questions ${start + 1}–${end} of ${questions.length}`;
-      progressInner.style.width = `${(pageNum / totalPages) * 100}%`;
-
-      btnPrev.disabled = currentPage === 0;
-      btnNext.textContent = currentPage === totalPages - 1 ? "See My Results →" : "Next →";
-    }
-
-    function clearCurrentPageAnswers() {
-      const start = currentPage * pageSize;
-      const end = Math.min(start + pageSize, questions.length);
-      for (let i = start; i < end; i++) {
-        delete answers[questions[i].id];
+      function googleCall(method, payload) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler(resolve)
+            .withFailureHandler(err => reject(new Error(err && err.message ? err.message : err)))
+            [method](payload);
+        });
       }
-      renderPage();
-    }
 
-    function saveProgress() {
-      try {
-        const payload = { answers, notes: notesBox.value || "", ts: Date.now() };
-        localStorage.setItem("traumaProfileAnswers", JSON.stringify(payload));
-        alert("Progress saved in this browser.");
-      } catch {
-        alert("Could not save progress.");
-      }
-    }
-
-    function loadProgress() {
-      try {
-        const raw = localStorage.getItem("traumaProfileAnswers");
-        if (!raw) return;
-        const payload = JSON.parse(raw);
-        if (payload && payload.answers) {
-          Object.assign(answers, payload.answers);
+      async function boot() {
+        try {
+          const response = await googleCall('getInitialState');
+          appState = response.state;
+          renderState();
+          if (!response.capabilities.llmConfigured) {
+            flashStatus('Heuristic planning mode is active. Add OPENAI_API_KEY or GEMINI_API_KEY in Script Properties for optional AI narrative.', true);
+          }
+        } catch (error) {
+          flashStatus(error.message || 'Failed to load app state.', true);
         }
-        if (payload && typeof payload.notes === "string") {
-          notesBox.value = payload.notes;
+      }
+
+      function renderState() {
+        if (!appState) return;
+        const profile = appState.profile || {};
+        const plan = appState.lastPlan || {};
+
+        document.getElementById('agentName').value = profile.name || '';
+        document.getElementById('preferredModel').value = profile.preferredModel || 'heuristic';
+        document.getElementById('agentMission').value = profile.mission || '';
+        document.getElementById('operatingModel').value = profile.operatingModel || '';
+        document.getElementById('safeContext').value = profile.safeContext || '';
+        document.getElementById('blackBeltFocus').value = profile.blackBeltFocus || '';
+        document.getElementById('constraints').value = profile.constraints || '';
+
+        document.getElementById('heroDirectiveCount').textContent = (appState.directives || []).length;
+        document.getElementById('heroArtifactCount').textContent = (appState.artifacts || []).length;
+        document.getElementById('heroCadence').textContent = (plan.nextReview || 'Weekly').replace('Review ', '');
+
+        renderPlan(plan);
+        renderDirectives(appState.directives || []);
+        renderArtifacts(appState.artifacts || []);
+      }
+
+      function renderPlan(plan) {
+        document.getElementById('planSummary').innerHTML = `
+          <strong>${escapeHtml(plan.focus || 'Autonomous planning workspace')}</strong>
+          <p class="muted">${escapeHtml(plan.executiveSummary || 'No plan available yet.')}</p>
+          ${plan.llmResponse ? `<div class="pill-row"><span class="pill">Optional AI narrative</span></div><p>${escapeHtml(plan.llmResponse)}</p>` : ''}
+          <div class="pill-row">
+            <span class="pill">${escapeHtml(plan.nextReview || 'Review weekly')}</span>
+            <span class="pill">${escapeHtml((plan.safeOutputs || {}).strategicTheme || 'SAFe planning')}</span>
+          </div>
+        `;
+
+        const backlog = (plan.backlog || []).map(item => `
+          <div class="card">
+            <strong>${escapeHtml(item.title)}</strong>
+            <div class="pill-row">
+              <span class="pill">${escapeHtml(item.type)}</span>
+              <span class="pill">${escapeHtml(item.priority)}</span>
+            </div>
+            <p>${escapeHtml(item.rationale)}</p>
+            <p class="muted">Acceptance: ${escapeHtml(item.acceptance)}</p>
+          </div>
+        `).join('') || '<p class="muted">No backlog items yet.</p>';
+        document.getElementById('backlogList').innerHTML = backlog;
+
+        const safe = plan.safeOutputs || {};
+        document.getElementById('safeOutputs').innerHTML = `
+          ${kvCard('Strategic theme', safe.strategicTheme)}
+          ${kvCard('Epic hypothesis', safe.epicHypothesis)}
+          ${listCard('Features', safe.features || [])}
+          ${listCard('PI objectives', safe.piObjectives || [])}
+          ${listCard('Risks', safe.risks || [])}
+          ${listCard('Evidence', safe.evidence || [])}
+        `;
+
+        const sigma = plan.sixSigmaOutputs || {};
+        document.getElementById('sigmaOutputs').innerHTML = `
+          ${kvCard('DMAIC phase', sigma.dmaicPhase)}
+          ${kvCard('Problem statement', sigma.problemStatement)}
+          ${listCard('CTQs', sigma.ctqs || [])}
+          ${listCard('Root-cause signals', sigma.rootCauseSignals || [])}
+          ${listCard('Improvement actions', sigma.improvementActions || [])}
+          ${listCard('Control plan', sigma.controlPlan || [])}
+        `;
+      }
+
+      function renderDirectives(items) {
+        document.getElementById('directiveList').innerHTML = items.length
+          ? items.map(item => `
+            <div class="card">
+              <strong>${escapeHtml(item.title)}</strong>
+              <p>${escapeHtml(item.detail || 'No detail provided.')}</p>
+              <div class="pill-row">
+                <span class="pill">${escapeHtml(item.source || 'manual')}</span>
+                <span class="pill">Impact: ${escapeHtml(item.impact || 'medium')}</span>
+                <span class="pill">${formatDate(item.createdAt)}</span>
+              </div>
+            </div>
+          `).join('')
+          : '<p class="muted">No directions captured yet.</p>';
+      }
+
+      function renderArtifacts(items) {
+        document.getElementById('artifactList').innerHTML = items.length
+          ? items.map(item => `
+            <div class="card">
+              <strong>${escapeHtml(item.title)}</strong>
+              <p>${escapeHtml(item.summary || item.description || 'No summary available.')}</p>
+              <div class="pill-row">
+                <span class="pill">${escapeHtml(item.sourceType || 'manual')}</span>
+                ${item.fileName ? `<span class="pill">${escapeHtml(item.fileName)}</span>` : ''}
+                ${item.tags && item.tags.length ? item.tags.map(tag => `<span class="pill">${escapeHtml(tag)}</span>`).join('') : ''}
+              </div>
+            </div>
+          `).join('')
+          : '<p class="muted">No artifacts ingested yet.</p>';
+      }
+
+      async function saveProfile() {
+        try {
+          const payload = {
+            name: document.getElementById('agentName').value,
+            preferredModel: document.getElementById('preferredModel').value,
+            mission: document.getElementById('agentMission').value,
+            operatingModel: document.getElementById('operatingModel').value,
+            safeContext: document.getElementById('safeContext').value,
+            blackBeltFocus: document.getElementById('blackBeltFocus').value,
+            constraints: document.getElementById('constraints').value
+          };
+          const response = await googleCall('updateAgentProfile', payload);
+          appState = response.state;
+          renderState();
+          flashStatus('Agent profile updated.');
+        } catch (error) {
+          flashStatus(error.message || 'Could not save profile.', true);
         }
-      } catch {}
-    }
-
-    function showResults() {
-      const totalYes = Object.values(answers).filter(v => v === "yes").length;
-      const answeredCount = Object.keys(answers).length;
-      const total = questions.length;
-      const percentYes = total > 0 ? Math.round((totalYes / total) * 100) : 0;
-
-      summaryScore.textContent = `Yes: ${totalYes} / ${total} (${percentYes}%)`;
-      summarySub.textContent = `You answered ${answeredCount} of ${total} statements.`;
-      summaryNote.textContent =
-        "This summary simply reflects how many items you marked as true. Bring this to a therapist if you'd like to explore the patterns in more depth.";
-
-      questionsView.style.display = "none";
-      resultsView.style.display = "block";
-    }
-
-    function startOver() {
-      if (!confirm("This will clear all answers and notes and start over. Continue?")) return;
-      for (const key in answers) {
-        delete answers[key];
       }
-      localStorage.removeItem("traumaProfileAnswers");
-      notesBox.value = "";
-      currentPage = 0;
-      resultsView.style.display = "none";
-      questionsView.style.display = "block";
-      renderPage();
-    }
 
-    function buildEmailBody() {
-      const totalYes = Object.values(answers).filter(v => v === "yes").length;
-      const answeredCount = Object.keys(answers).length;
-      const total = questions.length;
-      const percentYes = total > 0 ? Math.round((totalYes / total) * 100) : 0;
-
-      const lines = [];
-      lines.push("Post Traumatic Stress Index (Personal Use) - Summary");
-      lines.push("");
-      lines.push(`Yes responses: ${totalYes} / ${total} (${percentYes}%)`);
-      lines.push(`Items answered: ${answeredCount} / ${total}`);
-      lines.push("");
-      lines.push("Notes / reflections:");
-      const notes = notesBox.value || "";
-      lines.push(notes ? notes : "(none added)");
-      lines.push("");
-      lines.push("This summary comes from a self-reflection tool and is not a diagnosis.");
-      return lines.join("\n");
-    }
-
-    function sendResultsByEmail() {
-      const subject = encodeURIComponent("My Post Traumatic Stress Index (personal use) results");
-      const body = encodeURIComponent(buildEmailBody());
-      window.location.href = `mailto:?subject=${subject}&body=${body}`;
-    }
-
-    btnPrev.addEventListener("click", () => {
-      if (currentPage > 0) {
-        currentPage -= 1;
-        renderPage();
+      async function submitDirective() {
+        try {
+          const payload = {
+            title: document.getElementById('directiveTitle').value,
+            detail: document.getElementById('directiveDetail').value,
+            source: document.getElementById('directiveSource').value,
+            impact: document.getElementById('directiveImpact').value
+          };
+          const response = await googleCall('saveDirective', payload);
+          appState = response.state;
+          renderState();
+          document.getElementById('directiveTitle').value = '';
+          document.getElementById('directiveDetail').value = '';
+          document.getElementById('directiveSource').value = '';
+          document.getElementById('directiveImpact').value = 'medium';
+          flashStatus(response.message);
+        } catch (error) {
+          flashStatus(error.message || 'Could not capture direction.', true);
+        }
       }
-    });
 
-    btnNext.addEventListener("click", () => {
-      if (currentPage === totalPages - 1) {
-        showResults();
-      } else {
-        currentPage += 1;
-        renderPage();
+      async function submitArtifact() {
+        try {
+          const payload = {
+            title: document.getElementById('artifactTitle').value,
+            sourceType: document.getElementById('artifactType').value,
+            driveUrlOrId: document.getElementById('artifactDriveRef').value,
+            description: document.getElementById('artifactDescription').value,
+            content: document.getElementById('artifactContent').value
+          };
+          const response = await googleCall('ingestArtifact', payload);
+          appState = response.state;
+          renderState();
+          document.getElementById('artifactTitle').value = '';
+          document.getElementById('artifactDriveRef').value = '';
+          document.getElementById('artifactDescription').value = '';
+          document.getElementById('artifactContent').value = '';
+          flashStatus(response.message);
+        } catch (error) {
+          flashStatus(error.message || 'Could not ingest artifact.', true);
+        }
       }
-    });
 
-    btnClear.addEventListener("click", clearCurrentPageAnswers);
-    btnSave.addEventListener("click", saveProgress);
-    btnStartOver.addEventListener("click", startOver);
-    btnRetake.addEventListener("click", () => {
-      resultsView.style.display = "none";
-      questionsView.style.display = "block";
-      renderPage();
-    });
-    btnStartOver2.addEventListener("click", startOver);
+      async function runCycle() {
+        try {
+          const response = await googleCall('runAutonomousCycle', {
+            focus: (appState && appState.charter && appState.charter.currentPurpose) || 'Autonomous execution cycle',
+            instructions: 'Use the latest profile, directives, and artifacts to produce the next-best plan.'
+          });
+          appState = response.state;
+          renderState();
+          flashStatus('Autonomous cycle completed.');
+        } catch (error) {
+          flashStatus(error.message || 'Could not run autonomous cycle.', true);
+        }
+      }
 
-    loadProgress();
-    renderPage();
-  </script>
-</body>
+      async function resetWorkspace() {
+        if (!confirm('Reset the entire workspace? This clears directives, ingested artifacts, and planning history.')) return;
+        try {
+          const response = await googleCall('resetWorkspace');
+          appState = response.state;
+          renderState();
+          flashStatus('Workspace reset.');
+        } catch (error) {
+          flashStatus(error.message || 'Could not reset workspace.', true);
+        }
+      }
+
+      function flashStatus(message, warning) {
+        const el = document.getElementById('statusBox');
+        el.textContent = message;
+        el.className = 'status ' + (warning ? 'warning' : 'show');
+      }
+
+      function kvCard(title, value) {
+        return `<div class="card"><strong>${escapeHtml(title)}</strong><p>${escapeHtml(value || 'Not available yet.')}</p></div>`;
+      }
+
+      function listCard(title, items) {
+        const list = items.length ? `<ul>${items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>` : '<p class="muted">No entries yet.</p>';
+        return `<div class="card"><strong>${escapeHtml(title)}</strong>${list}</div>`;
+      }
+
+      function escapeHtml(value) {
+        return String(value == null ? '' : value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function formatDate(value) {
+        if (!value) return 'Unknown time';
+        return new Date(value).toLocaleString();
+      }
+
+      boot();
+    </script>
+  </body>
 </html>
